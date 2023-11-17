@@ -1,0 +1,35 @@
+.main {
+  display: grid;
+}
+@media (max-width: 768px) {
+  .main {
+    grid-row: middleContainer;
+    grid-column: 1/-1;
+  }
+}
+.main-content {
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+  border: 3px solid transparent;
+  border-radius: 20px;
+  padding: 1rem;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* (IE,Edge)スクロールバーの非表示 */
+  scrollbar-width: none; /* (Firefox)スクロールバーの非表示 */
+}
+/* (Chrome,Safari)スクロールバーの非表示 */
+.main-content::-webkit-scrollbar {
+  display: none;
+}
+.main-background {
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+  border: 3px solid gray;
+  border-radius: 20px;
+  background-color: lightgray;
+  opacity: 0.9;
+  z-index: -1;
+}
+.heading {
+  color: chocolate;
+}

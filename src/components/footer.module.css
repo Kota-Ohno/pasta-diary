@@ -1,0 +1,11 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0rem 1.25rem;
+}
+@media (min-width: 769px) {
+  .footer {
+    display: none;
+  }
+}
