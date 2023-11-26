@@ -1,5 +1,15 @@
 const path = require('path');
 
+// blog/blogを削除
+exports.onCreatePage = ({ page, actions }) => {
+  const { deletePage } = actions;
+  
+  // 特定の条件に基づいてページを削除する例
+  if (page.path === '/blog/blog/') {
+    deletePage(page);
+  }
+};
+
 // blogページのペジネーション作成
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions;
