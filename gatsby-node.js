@@ -1,10 +1,9 @@
 const path = require('path');
 
-// blog/blogを削除
 exports.onCreatePage = ({ page, actions }) => {
   const { deletePage } = actions;
   
-  // 特定の条件に基づいてページを削除する例
+// blog/blogを削除
   if (page.path === '/blog/blog/') {
     deletePage(page);
   }
