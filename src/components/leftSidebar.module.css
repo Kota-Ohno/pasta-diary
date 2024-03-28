@@ -1,9 +1,29 @@
 .left-sidebar {
   display: flex;
+  flex-direction: column;
   border-radius: 0 20px 20px 0;
+  opacity: 0.9;
+  padding: 1.5rem 0;
 }
 @media (max-width: 768px) {
   .left-sidebar {
     display: none;
   }
+}
+.categoryLink {
+  display: block;
+  margin: 0.3rem 0.5rem 0.3rem 0;
+  padding: 0.7rem;
+  border-radius: 0 20px 20px 0;
+  background-color: lightgray;
+  color: chocolate;
+  font-weight: 700;
+  font-size: large;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.categoryLink:hover {
+  transform: scale(1.05);
+  background-color: #e4e4e4;
 }
