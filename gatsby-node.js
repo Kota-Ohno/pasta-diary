@@ -1,5 +1,6 @@
 const path = require('path');
 
+// ページ生成時処理
 exports.onCreatePage = ({ page, actions }) => {
   const { deletePage } = actions;
   
@@ -13,10 +14,33 @@ exports.onCreatePage = ({ page, actions }) => {
   }
 };
 
-// ペジネーション作成
+// ページ生成の共通処理
+const createPaginationPages = (createPage, items, pathPrefix, component, postsPerPage, additionalContext = {}) => {
+  const numPages = Math.ceil(items.totalCount / postsPerPage);
+
+  Array.from({ length: numPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? pathPrefix : `${pathPrefix}${i + 1}`,
+      component,
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
+        ...additionalContext,
+      },
+    });
+  });
+};
+
+// ページ作成
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions;
 
+  // ページネーションの設定
+  const postsPerPage = 6;
+
+  // 一覧ページ生成
   const result = await graphql(`
     {
       allMdx(sort: {frontmatter: {date: DESC}}) {
@@ -38,26 +62,11 @@ exports.createPages = async ({ actions, graphql }) => {
   // index.jsxだとgatsby側に自動生成されてcontextが設定できないため、ファイル名を変更している
   const blogPost = path.resolve('./src/pages/blog/blog.jsx');
 
-  const TotalLength = result.data.allMdx.totalCount
+  // ブログページの生成処理
+  createPaginationPages(createPage, result.data.allMdx, '/blog/', blogPost, postsPerPage);
 
-  // ページネーションの設定
-  const postsPerPage = 6;
-  const numPages = Math.ceil( TotalLength / postsPerPage);
 
-  Array.from({ length: numPages }).forEach((_, i) => {
-    createPage({
-      path: i === 0 ? '/blog' : `/blog/${i + 1}`,
-      component: blogPost,
-      context: {
-        limit: postsPerPage,
-        skip: i * postsPerPage,
-        numPages,
-        currentPage: i + 1,
-      },
-    });
-  });
-
-  // 全てのカテゴリーを取得
+  // カテゴリー別ページ生成
   const categoriesResult = await graphql(`
     {
       allMdx {
@@ -78,25 +87,9 @@ exports.createPages = async ({ actions, graphql }) => {
   // カテゴリーページのテンプレートを取得
   const categoryPage = path.resolve('./src/pages/blog/category.jsx');
 
+  // カテゴリーページの生成処理
   categories.forEach(category => {
-    const categorySlug = `/blog/${category.fieldValue.toLowerCase()}/`;
-
-    // カテゴリーごとのページネーションを考慮してページを生成
-    const numCategoryPages = Math.ceil(category.totalCount / postsPerPage);
-
-    Array.from({ length: numCategoryPages }).forEach((_, i) => {
-      createPage({
-        path: i === 0 ? categorySlug : `${categorySlug}${i + 1}`,
-        component: categoryPage,
-        context: {
-          category: category.fieldValue,
-          limit: postsPerPage,
-          skip: i * postsPerPage,
-          numCategoryPages,
-          currentPage: i + 1,
-        },
-      });
-    });
+    createPaginationPages(createPage, category, `/blog/${category.fieldValue.toLowerCase()}/`, categoryPage, postsPerPage, { category: category.fieldValue });
   });
 };
 
