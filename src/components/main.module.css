@@ -1,12 +1,6 @@
 .main {
   display: grid;
 }
-@media (max-width: 768px) {
-  .main {
-    grid-row: middleContainer;
-    grid-column: 1/-1;
-  }
-}
 .main-content {
   grid-row: 1/-1;
   grid-column: 1/-1;
