@@ -1,0 +1,28 @@
+.link-text {
+    color: chocolate;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    align-items: center;
+  }
+  
+  .pagination-link {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: chocolate;
+    text-decoration: none;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .pagination-link:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .pagination-link-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
