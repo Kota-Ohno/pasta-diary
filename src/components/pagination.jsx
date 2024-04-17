@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
 import { pagination, paginationLink, paginationLinkDisabled } from "./pagination.module.css";
+import { Box } from "@mui/material"
 
 const Pagination = ({ category, currentPage, numPages }) => {
   const isFirst = currentPage === 1;
@@ -17,7 +18,7 @@ const Pagination = ({ category, currentPage, numPages }) => {
 
 
   return (
-    <div className={pagination}>
+    <Box className={pagination}>
       <Link to={prevPage} rel="prev" className={`${paginationLink} ${isFirst ? paginationLinkDisabled : ''}`}>
         ← 前
       </Link>
@@ -38,7 +39,7 @@ const Pagination = ({ category, currentPage, numPages }) => {
       <Link to={nextPage} rel="next" className={`${paginationLink} ${isLast ? paginationLinkDisabled : ''}`}>
         次 →
       </Link>
-    </div>
+    </Box>
   );
 };
 
