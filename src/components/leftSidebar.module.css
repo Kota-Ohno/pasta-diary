@@ -17,8 +17,9 @@
   border-radius: 0 20px 20px 0;
   background-color: lightgray;
   color: chocolate;
-  font-weight: 700;
-  font-size: large;
+  font-weight: 900;
+  font-size: 1.3rem;
+  font-family: Helvetica, Arial, "Klee One", sans-serif;
   text-decoration: none;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }

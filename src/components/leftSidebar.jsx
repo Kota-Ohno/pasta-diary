@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import { leftSidebar, categoryLink } from "./leftSidebar.module.css"
-
+import { Box } from "@mui/material";
 
 const LeftSidebar = ({ className }) => {
   const data = useStaticQuery(graphql`
@@ -15,7 +15,7 @@ const LeftSidebar = ({ className }) => {
   `)
 
   return (
-    <div className={`${className} ${leftSidebar}`}>
+    <Box className={`${className} ${leftSidebar}`}>
       {data.allMdx.group.map(category => (
         <Link
           key={category.fieldValue}
@@ -25,7 +25,7 @@ const LeftSidebar = ({ className }) => {
           {category.fieldValue}
         </Link>
       ))}
-    </div>
+    </Box>
   )
 }
 
