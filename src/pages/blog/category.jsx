@@ -5,22 +5,22 @@ import Seo from "../../components/seo"
 import Pagination from "../../components/pagination"
 import PostList from "../../components/postList"
 
-
-const BlogPage = ({ data, pageContext }) => {
-  const { currentPage, numPages } = pageContext;
+const CategoryPage = ({ data, pageContext }) => {
+  const { category, currentPage, numPages } = pageContext
   const posts = data.allMdx.edges
 
   return (
-    <Layout pageTitle="パスタ日記">
+    <Layout pageTitle={`カテゴリー: ${category}`}>
       <PostList posts={posts} />
-      <Pagination category="" currentPage={currentPage} numPages={numPages} />
+      <Pagination category={category} currentPage={currentPage} numPages={numPages} />
     </Layout>
   )
 }
 
 export const query = graphql`
-  query BlogPage($skip: Int, $limit: Int) {
+  query CategoryPage($category: String, $skip: Int!, $limit: Int!) {
     allMdx(
+      filter: {frontmatter: {categories: {in: [$category]}}}
       sort: {frontmatter: {date: DESC}}
       limit: $limit
       skip: $skip
@@ -38,7 +38,6 @@ export const query = graphql`
     }
   }
 `
-
 export const Head = () => <Seo title="パスタ日記" />
 
-export default BlogPage
+export default CategoryPage

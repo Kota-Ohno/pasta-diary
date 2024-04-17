@@ -1,21 +1,48 @@
 const path = require('path');
 
-// blog/blogを削除
+// ページ生成時処理
 exports.onCreatePage = ({ page, actions }) => {
   const { deletePage } = actions;
   
-  // 特定の条件に基づいてページを削除する例
+  // blog/blogを削除
   if (page.path === '/blog/blog/') {
+    deletePage(page);
+  }
+  // blog/categoryを削除
+  if (page.path === '/blog/category/') {
     deletePage(page);
   }
 };
 
-// blogページのペジネーション作成
+// ページ生成の共通処理
+const createPaginationPages = (createPage, items, pathPrefix, component, postsPerPage, additionalContext = {}) => {
+  const numPages = Math.ceil(items.totalCount / postsPerPage);
+
+  Array.from({ length: numPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? pathPrefix : `${pathPrefix}${i + 1}`,
+      component,
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
+        ...additionalContext,
+      },
+    });
+  });
+};
+
+// ページ作成
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions;
 
+  // ページネーションの設定
+  const postsPerPage = 6;
+
+  // 一覧ページ生成
   const result = await graphql(`
-  {
+    {
       allMdx(sort: {frontmatter: {date: DESC}}) {
           totalCount
           nodes {
@@ -35,24 +62,34 @@ exports.createPages = async ({ actions, graphql }) => {
   // index.jsxだとgatsby側に自動生成されてcontextが設定できないため、ファイル名を変更している
   const blogPost = path.resolve('./src/pages/blog/blog.jsx');
 
+  // ブログページの生成処理
+  createPaginationPages(createPage, result.data.allMdx, '/blog/', blogPost, postsPerPage);
 
-  const TotalLength = result.data.allMdx.totalCount
 
-  // ページネーションの設定
-  const postsPerPage = 6;
-  const numPages = Math.ceil( TotalLength / postsPerPage);
+  // カテゴリー別ページ生成
+  const categoriesResult = await graphql(`
+    {
+      allMdx {
+        group(field: {frontmatter: {categories: SELECT}}) {
+          fieldValue
+          totalCount
+        }
+      }
+    }
+  `);
 
-  Array.from({ length: numPages }).forEach((_, i) => {
-    createPage({
-      path: i === 0 ? '/blog' : `/blog/${i + 1}`,
-      component: blogPost,
-      context: {
-        limit: postsPerPage,
-        skip: i * postsPerPage,
-        numPages,
-        currentPage: i + 1,
-      },
-    });
+  if (categoriesResult.errors) {
+    throw categoriesResult.errors;
+  }
+
+  const categories = categoriesResult.data.allMdx.group;
+
+  // カテゴリーページのテンプレートを取得
+  const categoryPage = path.resolve('./src/pages/blog/category.jsx');
+
+  // カテゴリーページの生成処理
+  categories.forEach(category => {
+    createPaginationPages(createPage, category, `/blog/${category.fieldValue.toLowerCase()}/`, categoryPage, postsPerPage, { category: category.fieldValue });
   });
 };
 

@@ -1,11 +1,31 @@
 import * as React from "react"
-import { leftSidebar } from "./leftSidebar.module.css"
+import { useStaticQuery, graphql, Link } from "gatsby"
+import { leftSidebar, categoryLink } from "./leftSidebar.module.css"
+import { Box } from "@mui/material";
 
 const LeftSidebar = ({ className }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      allMdx {
+        group(field: {frontmatter: {categories: SELECT}}) {
+          fieldValue
+        }
+      }
+    }
+  `)
+
   return (
-    <div className={`${className} ${leftSidebar}`}>
-      <div></div>
-    </div>
+    <Box className={`${className} ${leftSidebar}`}>
+      {data.allMdx.group.map(category => (
+        <Link
+          key={category.fieldValue}
+          to={`/blog/${category.fieldValue.toLowerCase()}/`}
+          className={categoryLink}
+        >
+          {category.fieldValue}
+        </Link>
+      ))}
+    </Box>
   )
 }
 

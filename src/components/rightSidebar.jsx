@@ -1,11 +1,11 @@
 import * as React from "react"
-import { rightSidebar } from "./rightSidebar.module.css"
+import { Box } from "@mui/material";
 
 const RightSidebar = ({ className }) => {
   return (
-    <div className={`${className} ${rightSidebar}`}>
-      <div></div>
-    </div>
+    <Box className={className} sx={{ display: { xs: 'none', sm: 'none', md: 'block' }, borderRadius: '20px 0 0 20px' }}>
+      <Box></Box>
+    </Box>
   )
 }
 

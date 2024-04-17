@@ -1,12 +1,6 @@
 .main {
   display: grid;
 }
-@media (max-width: 768px) {
-  .main {
-    grid-row: middleContainer;
-    grid-column: 1/-1;
-  }
-}
 .main-content {
   grid-row: 1/-1;
   grid-column: 1/-1;
@@ -32,4 +26,7 @@
 }
 .heading {
   color: chocolate;
+  font-size: 2.7rem;
+  font-weight: 600;
+  font-family: Helvetica, Arial, "Klee One", sans-serif;
 }
