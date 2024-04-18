@@ -6,7 +6,6 @@ const Footer = ({ className }) => {
     <Box
       component="footer"
       sx={{
-        display: { sm: 'block', md: 'block' },
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '0rem 1.25rem',
