@@ -10,7 +10,7 @@ const CategoryPage = ({ data, pageContext }) => {
   const posts = data.allMdx.edges
 
   return (
-    <Layout pageTitle={`カテゴリー: ${category}`}>
+    <Layout pageTitle={`${category}`}>
       <PostList posts={posts} />
       <Pagination category={category} currentPage={currentPage} numPages={numPages} />
     </Layout>
