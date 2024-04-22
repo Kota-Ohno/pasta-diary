@@ -41,7 +41,7 @@ const Layout = ({ pageTitle, children }) => {
         <LeftSidebar></LeftSidebar>
       </Grid>
       <Grid item xs={12} md={8} sx={{
-        height: `calc(100vh - ${headerHeight}px - ${footerHeight}px)`, // ヘッダーの高さを使用
+        height: `calc(100% - ${headerHeight}px - ${footerHeight}px)`, // ヘッダーの高さを使用
         overflowY: 'scroll',
         '-ms-overflow-style': 'none', // IE, Edge対応
         'scrollbar-width': 'none', // Firefox対応
