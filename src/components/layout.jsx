@@ -13,11 +13,17 @@ import "../styles/styles.css";
 const Layout = ({ pageTitle, children }) => {
   const headerRef = useRef(null); // ヘッダーのrefを作成
   const [headerHeight, setHeaderHeight] = useState(0); // ヘッダーの高さを保存するステート
+  const footerRef = useRef(null); // フッターのrefを作成
+  const [footerHeight, setFooterHeight] = useState(0); // フッターの高さを保存するステート
 
   useEffect(() => {
     // ヘッダーの高さを取得してステートを更新
     if (headerRef.current) {
       setHeaderHeight(headerRef.current.offsetHeight);
+    }
+    // フッターの高さを取得してステートを更新
+    if (footerRef.current) {
+      setFooterHeight(footerRef.current.offsetHeight);
     }
   }, []); // 空の依存配列を指定して、コンポーネントのマウント時にのみ実行
 
@@ -35,7 +41,7 @@ const Layout = ({ pageTitle, children }) => {
         <LeftSidebar></LeftSidebar>
       </Grid>
       <Grid item xs={12} md={8} sx={{
-        height: `calc(100vh - ${headerHeight}px)`, // ヘッダーの高さを使用
+        height: `calc(100vh - ${headerHeight}px - ${footerHeight}px)`, // ヘッダーの高さを使用
         overflowY: 'scroll',
         '-ms-overflow-style': 'none', // IE, Edge対応
         'scrollbar-width': 'none', // Firefox対応
@@ -48,7 +54,7 @@ const Layout = ({ pageTitle, children }) => {
       <Grid item md={2} sx={{ display: { xs: 'none', md: 'block' } }}>
         <RightSidebar></RightSidebar>
       </Grid>
-      <Grid item xs={12} sx={{ display: { md: 'none' } }}>
+      <Grid item xs={12} sx={{ display: { md: 'none' } }} ref={footerRef}>
         <Footer></Footer>
       </Grid>
     </Grid>

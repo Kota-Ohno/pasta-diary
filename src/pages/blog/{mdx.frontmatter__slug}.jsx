@@ -4,16 +4,24 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Layout from "../../components/layout"
 import Seo from "../../components/seo"
 
+import { Typography, Box } from '@mui/material';
+
 const BlogPost = ({ data, children }) => {
   const image = getImage(data.mdx.frontmatter.pasta_image)
   return (
     <Layout pageTitle={data.mdx.frontmatter.title}>
-      <p>{data.mdx.frontmatter.date}</p>
-      <GatsbyImage
-        image={image}
-        alt={data.mdx.frontmatter.image_alt}
-      ></GatsbyImage>
-      {children}
+      <Typography variant="subtitle1" gutterBottom>
+        {data.mdx.frontmatter.date}
+      </Typography>
+      <Box>
+        <GatsbyImage
+          image={image}
+          alt={data.mdx.frontmatter.image_alt}
+        />
+      </Box>
+      <Box>
+        {children}
+      </Box>
     </Layout>
   )
 }
