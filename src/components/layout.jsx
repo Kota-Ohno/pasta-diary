@@ -28,7 +28,17 @@ const Layout = ({ pageTitle, children }) => {
   }, []); // 空の依存配列を指定して、コンポーネントのマウント時にのみ実行
 
   return (
-    <Grid container sx={{ height: '100%', width: '100%', alignItems: 'flex-start' }}>
+    <Grid container sx={{ 
+      height: '100%',
+      width: '100%',
+      alignItems: 'flex-start' , 
+      overflowY: 'scroll',
+      '-ms-overflow-style': 'none', // IE, Edge対応
+      'scrollbar-width': 'none', // Firefox対応
+      '&::-webkit-scrollbar': {
+      display: 'none', // Chrome, Safari対応
+      }
+    }}>
       <StaticImage
         alt="スパゲティ"
         src="../images/background.jpg"
