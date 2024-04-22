@@ -28,7 +28,7 @@ const Layout = ({ pageTitle, children }) => {
   }, []); // 空の依存配列を指定して、コンポーネントのマウント時にのみ実行
 
   return (
-    <Grid container sx={{ height: '100vh', width: '100vw', alignItems: 'flex-start' }}>
+    <Grid container sx={{ height: '100%', width: '100%', alignItems: 'flex-start' }}>
       <StaticImage
         alt="スパゲティ"
         src="../images/background.jpg"
