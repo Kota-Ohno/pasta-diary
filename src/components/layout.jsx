@@ -37,7 +37,8 @@ const Layout = ({ pageTitle, children }) => {
       'scrollbar-width': 'none', // Firefox対応
       '&::-webkit-scrollbar': {
       display: 'none', // Chrome, Safari対応
-    }}}>
+      }
+    }}>
       <StaticImage
         alt="スパゲティ"
         src="../images/background.jpg"
