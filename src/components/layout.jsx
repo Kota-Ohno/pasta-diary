@@ -28,7 +28,7 @@ const Layout = ({ pageTitle, children }) => {
   }, []); // 空の依存配列を指定して、コンポーネントのマウント時にのみ実行
 
   return (
-    <Grid container sx={{ height: '100vh', width: '100vw', alignItems: 'flex-start' }}>
+    <Grid container sx={{ height: '100%', width: '100%', alignItems: 'flex-start' }}>
       <StaticImage
         alt="スパゲティ"
         src="../images/background.jpg"
@@ -41,7 +41,7 @@ const Layout = ({ pageTitle, children }) => {
         <LeftSidebar></LeftSidebar>
       </Grid>
       <Grid item xs={12} md={8} sx={{
-        height: `calc(100vh - ${headerHeight}px - ${footerHeight}px)`, // ヘッダーの高さを使用
+        height: `calc(100% - ${headerHeight}px - ${footerHeight}px)`, // ヘッダーの高さを使用
         overflowY: 'scroll',
         '-ms-overflow-style': 'none', // IE, Edge対応
         'scrollbar-width': 'none', // Firefox対応
