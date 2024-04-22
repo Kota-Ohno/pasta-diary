@@ -38,7 +38,7 @@ exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions;
 
   // ページネーションの設定
-  const postsPerPage = 6;
+  const postsPerPage = 5;
 
   // 一覧ページ生成
   const result = await graphql(`
